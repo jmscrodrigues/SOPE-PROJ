@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-
+#include <Hhandler.h>
 
 
 int main(int argc, char **argv, char **envp) {
@@ -22,6 +22,8 @@ int main(int argc, char **argv, char **envp) {
       if (strcmp(argv[2], "-r") == 0) {
         char file[strlen(argv[3])];
         strcpy(file,argv[3]);
+        printf("OK");
+        printf("%s", file);
       //TODO
       //FICHEIRO DO -R
     }
