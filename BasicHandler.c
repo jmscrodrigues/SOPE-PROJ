@@ -10,6 +10,5 @@ char BasicString(char *filename) {
   fstat(fd1, &ss);
   size = ss.st_size; //FILE_SIZE (nao sei porque mas se tiver só 1 caracter aparece que tem 2 e assi por diante!)
 
-  printf("%d", fileMode);
   close(fd1);
 }
