@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <Hhandler.h>
+#include "BasicHandler.h"
 
 
 int main(int argc, char **argv, char **envp) {
-  if ((argc < 4) || (argc > 9)) {
+  if ((argc < 3) || (argc > 9)) {
     printf("Too many/little arguments!\n");
     return -1;
   }
@@ -129,6 +129,14 @@ int main(int argc, char **argv, char **envp) {
   }
 
   else {
+
+    if (argc == 3) {
+      char file[strlen(argv[2])];
+      strcpy(file,argv[2]);
+      BasicString(file);
+      //FAZER O BÁSICO APENAS
+    }
+
     if (argc == 5) {
 
       if (strcmp(argv[2], "-h") == 0) {
