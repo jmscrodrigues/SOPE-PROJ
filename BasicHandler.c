@@ -3,14 +3,13 @@
 char BasicString(char *filename) {
   struct stat ss;
   int fd1;
-  char creationTime[MAX_SIZE];
+  off_t size;
 
   fd1 = open(filename, O_RDWR);
 
   fstat(fd1, &ss);
+  size = ss.st_size; //FILE_SIZE (nao sei porque mas se tiver só 1 caracter aparece que tem 2 e assi por diante!)
 
-  strcpy(creationTime, &ss.st_ctime);
-  printf("%s\n", creationTime);
+  printf("%d", fileMode);
   close(fd1);
-  return 'a';
 }
