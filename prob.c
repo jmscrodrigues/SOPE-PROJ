@@ -2,6 +2,9 @@
 #include <string.h>
 #include <stdlib.h>
 
+#define MAXH 15
+
+
 int main(int argc, char **argv, char **envp) {
   if (argc < 3 || argc > 9) {
     printf("Too many/little arguments!\n");
@@ -16,7 +19,11 @@ int main(int argc, char **argv, char **envp) {
       //FAZER PARA O -R
     }
     else if (argc == 5) {
-      //VER QUAL DELES É
+      //FAZER PARA TODOS OS FICHEIROS E REPOSITORIOS COM A CONFIGURAÇÃO SEGUINTE:
+      if (strcmp(argv[3], "-h") == 0) {
+        char str[MAXH];
+        strcpy(str, argv[4]);
+      }
     }
     else if (argc == 7) {
       //VER QUAIS SAO
