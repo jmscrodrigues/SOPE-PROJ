@@ -5,15 +5,19 @@ char BasicString(char *filename) {
   int fd1;
 
   off_t size;
-  char date[20];
-  mode_t permission;
-  char permissionOwner[3];
+  char modifyDate[20];
+  char creationDate[20];
+  mode_t permission; //PERMISSOES, MODO OCTAL
+  char permissionOwner[3]; //STRING COM AS PERMISSOES
+
+
   fd1 = open(filename, O_RDWR);
 
   fstat(fd1, &ss);
 
   size = ss.st_size; //FILE_SIZE (nao sei porque mas se tiver só 1 caracter aparece que tem 2 e assi por diante!)
-  strftime(date, 20, "%d-%m-%yT%H:%M:%S", localtime(&(ss.st_mtime)));
+  strftime(modifyDate, 20, "%d-%m-%yT%H:%M:%S", localtime(&(ss.st_mtime))); //DATA DE ULTIMA MODIFICAÇAO
+  strftime(creationDate, 20, "%d-%m-%yT%H:%M:%S", localtime(&(ss.st_ctime))); //DATA DE CRIACAO
 
   permission = ss.st_mode;
   if ((permission & S_IRUSR) == 0) {
@@ -36,8 +40,6 @@ char BasicString(char *filename) {
       char execute[] = "x";
       strcat(permissionOwner, execute);
     }
-
-
 
   close(fd1);
 }
