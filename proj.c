@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+
 #include "BasicHandler.h"
 
 
@@ -27,9 +28,9 @@ int main(int argc, char **argv, char **envp) {
       else if (strcmp(argv[1], "-v") == 0) {
         char file[strlen(argv[2])];
         strcpy(file,argv[2]);
+        }
         //TODO
         //FICHEIRO DO -V (vai envolver o envp)
-      }
 
       else  {
         printf("Vamos ter que lidar com erro??");
