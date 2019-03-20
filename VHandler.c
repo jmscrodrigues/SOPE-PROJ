@@ -1,9 +1,10 @@
 #include "VHandler.h"
 
-void writeToFileV (char *filename) {
+static clock_t initialTime;
+
+void writeToFileV (char *filename, char* event) {
   int fd1;
   int pid;
-
 
   if (strstr(filename, ".txt") != ".txt") {
     strcat(filename, ".txt");
@@ -16,9 +17,16 @@ void writeToFileV (char *filename) {
   }
 
   pid = getpid();
+}
 
-  printf("%d\n", pid);
-  
+void clockInitialTime () {
+  initialTime = clock();
+}
 
-
+double elapsedTimeCalculator() {
+  double elapsedTime;
+  clock_t calcTime = clock();
+  calcTime -= initialTime;
+  elapsedTime = ((double) calcTime/CLOCKS_PER_SEC);
+  return elapsedTime;
 }
