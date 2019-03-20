@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-
 #include "BasicHandler.h"
+#include "VHandler.h"
 
 
 int main(int argc, char **argv, char **envp) {
@@ -28,9 +28,19 @@ int main(int argc, char **argv, char **envp) {
       else if (strcmp(argv[1], "-v") == 0) {
         char file[strlen(argv[2])];
         strcpy(file,argv[2]);
+        char logfilename[100];
+        for (int i = 0; envp[i] != NULL; i++) {
+          if (strncmp(envp[i], "LOGFILENAME", 11) == 0) {
+            strcpy(logfilename,envp[i]);
+            strtok(logfilename, "=");
+            strcpy(logfilename,strtok(NULL, "="));
+            break;
+          }
         }
+        writeToFileV(logfilename);
         //TODO
         //FICHEIRO DO -V (vai envolver o envp)
+      }
 
       else  {
         printf("Vamos ter que lidar com erro??");
