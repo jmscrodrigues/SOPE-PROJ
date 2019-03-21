@@ -7,10 +7,8 @@ char BasicString(char *filename) {
   off_t size;
   char modifyDate[20];
   char creationDate[20];
-  mode_t permission; //PERMISSOES, MODO OCTAL
-  char permissionOwner[3]; //STRING COM AS PERMISSOES
-
-
+  mode_t permission;
+  char permissionOwner[3];
   fd1 = open(filename, O_RDWR);
 
   fstat(fd1, &ss);
@@ -20,6 +18,7 @@ char BasicString(char *filename) {
   strftime(creationDate, 20, "%d-%m-%yT%H:%M:%S", localtime(&(ss.st_ctime))); //DATA DE CRIACAO
 
   permission = ss.st_mode;
+
   if ((permission & S_IRUSR) == 0) {
   }
   else {
@@ -41,5 +40,31 @@ char BasicString(char *filename) {
       strcat(permissionOwner, execute);
     }
 
+
   close(fd1);
+
+}
+
+
+char ChangeToFile(char *filename, char *filename1)    // -o
+{
+
+  int copy;
+  int file = open(filename, O_APPEND | O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR);
+
+  copy = dup(STDOUT_FILENO);
+
+  dup2(file, STDOUT_FILENO);
+
+  close(file);
+
+  //char *msg = "Ola";
+  write(STDOUT_FILENO, msg, strlen(msg));
+
+  dup2(copy, STDOUT_FILENO);
+
+  printf("Data saved on file %s\n", filename );
+  printf("Execution records saved on file ... \n");
+
+  return 0;
 }
