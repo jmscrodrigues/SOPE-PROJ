@@ -4,7 +4,7 @@
 static clock_t initialTime;
 static char filename[MAX_SSIZE];
 
-void writeToFileV (char* event0) {
+void writeToFileV (char* event) {
   int fd1;
   int pid;
   double elapsedTime;
@@ -17,7 +17,8 @@ void writeToFileV (char* event0) {
 
   pid = getpid();
   elapsedTime = elapsedTimeCalculator();
-  
+  write(fd1, event, 300);
+
 }
 
 void clockInitialTime () {

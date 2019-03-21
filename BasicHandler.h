@@ -9,5 +9,5 @@
 
 #define MAX_SIZE 100
 
-char BasicString(char *filename);
+char* BasicString(char *filename);
 char ChangeToFile(char *filename, char *filename1, char *msg);

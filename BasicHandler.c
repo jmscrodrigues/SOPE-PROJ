@@ -2,7 +2,7 @@
 
 void getFileInfo(char* filename, char* fileInfo);
 
-char BasicString(char *filename) {
+char* BasicString(char *filename) {
     struct stat ss;
     int fd1;
 
