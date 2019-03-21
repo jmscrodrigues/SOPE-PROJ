@@ -46,7 +46,7 @@ char BasicString(char *filename) {
 }
 
 
-char ChangeToFile(char *filename, char *filename1)    // -o
+char ChangeToFile(char *filename, char *filename1, char* msg)    // -o
 {
 
   int copy;
