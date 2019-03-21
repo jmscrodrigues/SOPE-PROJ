@@ -54,3 +54,4 @@ Module.symvers
 Mkfile.old
 dkms.confBasicHandler.o proj.o VHandler.o
 *.o
+BasicHandler.o
