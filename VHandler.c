@@ -7,6 +7,7 @@ static char filename[MAX_SSIZE];
 void writeToFileV (char* event0) {
   int fd1;
   int pid;
+  double elapsedTime;
 
   fd1 = open(filename, O_WRONLY | O_CREAT, 0750);
 
@@ -15,6 +16,8 @@ void writeToFileV (char* event0) {
   }
 
   pid = getpid();
+  elapsedTime = elapsedTimeCalculator();
+  
 }
 
 void clockInitialTime () {

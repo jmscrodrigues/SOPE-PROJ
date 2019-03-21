@@ -50,29 +50,12 @@ char BasicString(char *filename) {
 
     getFileInfo(filename, fileInfo);
     char* sizeString= malloc(10);
-    snprintf(sizeString,10,"%d",c);
-
-   /* strcpy(returnString, filename);//nome do ficheiro
-    strcat(returnString,&comma);//virgula
-
-    strcat(returnString,fileInfo+strlen(filename)+2);//info do ficheiro
-    strcat(returnString,&comma);//virgula
-
-    strcat(returnString,sizeString);//tamanho
-    strcat(returnString,&comma);//virgula
-
-    strcat(returnString,permissionOwner);//permissoes
-    strcat(returnString,&comma);//virgula
-
-    strcat(returnString,creationDate);//data criacao
-    strcat(returnString,&comma);//virgula
-
-    strcat(returnString,modifyDate);//data modificacao*/
+    snprintf(sizeString,10,"%ld",c);
 
     snprintf(returnString,200,"%s,%s,%s,%s,%s,%s",filename,fileInfo+strlen(filename)+2,sizeString,permissionOwner,creationDate,modifyDate);
 
     write(STDOUT_FILENO,returnString, 200);//retornar e mvez de escrever no ecra
-
+    return returnString;
     close(fd1);
 }
 
