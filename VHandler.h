@@ -7,5 +7,6 @@
 #include <time.h>
 
 void clockInitialTime();
-void writeToFileV (char *filename, char *event);
+void getLogFilename(char *name);
+void writeToFileV (char *event);
 double elapsedTimeCalculator();

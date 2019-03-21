@@ -1,14 +1,12 @@
 #include "VHandler.h"
 
+#define MAX_SSIZE 100
 static clock_t initialTime;
+static char filename[MAX_SSIZE];
 
-void writeToFileV (char *filename, char* event) {
+void writeToFileV (char* event0) {
   int fd1;
   int pid;
-
-  if (strstr(filename, ".txt") != ".txt") {
-    strcat(filename, ".txt");
-  }
 
   fd1 = open(filename, O_WRONLY | O_CREAT, 0750);
 
@@ -21,6 +19,10 @@ void writeToFileV (char *filename, char* event) {
 
 void clockInitialTime () {
   initialTime = clock();
+}
+
+void getLogFilename(char *name) {
+  strcpy(filename, name);
 }
 
 double elapsedTimeCalculator() {

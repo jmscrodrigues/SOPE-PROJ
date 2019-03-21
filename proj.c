@@ -31,17 +31,18 @@ int main(int argc, char **argv, char **envp) {
       else if (strcmp(argv[1], "-v") == 0) {
         char file[strlen(argv[2])];
         strcpy(file,argv[2]);
-        char logfilename[100];
+        char logfile[100];
         char *event;
         for (int i = 0; envp[i] != NULL; i++) {
           if (strncmp(envp[i], "LOGFILENAME", 11) == 0) {
-            strcpy(logfilename,envp[i]);
-            strtok(logfilename, "=");
-            strcpy(logfilename,strtok(NULL, "="));
+            strcpy(logfile, envp[i]);
+            strtok(logfile, "=");
+            strcpy(logfile,strtok(NULL, "="));
+            getLogFilename(logfile);
             break;
           }
         }
-        writeToFileV(logfilename, event);
+        writeToFileV(event);
         //TODO
         //FICHEIRO DO -V (vai envolver o envp)
       }
