@@ -11,3 +11,5 @@
 
 char* BasicString(char *filename);
 char ChangeToFile(char *filename, char *filename1, char *msg);
+void getExternalCommand(char* filename, char* fileInfo, char* commands[]);
+

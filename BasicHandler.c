@@ -1,7 +1,5 @@
 #include "BasicHandler.h"
 
-void getFileInfo(char* filename, char* fileInfo);
-
 char* BasicString(char *filename) {
     struct stat ss;
     int fd1;
@@ -48,14 +46,32 @@ char* BasicString(char *filename) {
 
     c = (long) size;
 
-    getFileInfo(filename, fileInfo);
+    char* fileCommand[] = { "file", filename, 0};
+    getExternalCommand(filename, fileInfo,fileCommand);
     char* sizeString= malloc(10);
-    snprintf(sizeString,10,"%ld",c);
+    snprintf(sizeString,10,"%d",c);
+
+    /* strcpy(returnString, filename);//nome do ficheiro
+     strcat(returnString,&comma);//virgula
+
+     strcat(returnString,fileInfo+strlen(filename)+2);//info do ficheiro
+     strcat(returnString,&comma);//virgula
+
+     strcat(returnString,sizeString);//tamanho
+     strcat(returnString,&comma);//virgula
+
+     strcat(returnString,permissionOwner);//permissoes
+     strcat(returnString,&comma);//virgula
+
+     strcat(returnString,creationDate);//data criacao
+     strcat(returnString,&comma);//virgula
+
+     strcat(returnString,modifyDate);//data modificacao*/
 
     snprintf(returnString,200,"%s,%s,%s,%s,%s,%s",filename,fileInfo+strlen(filename)+2,sizeString,permissionOwner,creationDate,modifyDate);
 
     write(STDOUT_FILENO,returnString, 200);//retornar e mvez de escrever no ecra
-    return returnString;
+
     close(fd1);
 }
 
@@ -82,7 +98,7 @@ char ChangeToFile(char *filename, char *filename1, char* msg)    // -o
     return 0;
 }
 
-void getFileInfo(char* filename, char* fileInfo) {
+void getExternalCommand(char* filename, char* outPutStr, char* commands[]) {
 
     int des_p[2];
 
@@ -98,8 +114,7 @@ void getFileInfo(char* filename, char* fileInfo) {
         close(des_p[0]);       //closing pipe read
         close(des_p[1]);
 
-        char* prog1[] = { "file", filename, 0};
-        execvp(prog1[0], prog1);
+        execvp(commands[0], commands);
         perror("execvp of ls failed");
         exit(1);
     }
@@ -109,8 +124,7 @@ void getFileInfo(char* filename, char* fileInfo) {
         dup(des_p[0]);         //replacing stdin with pipe read
         close(des_p[1]);       //closing pipe write
         close(des_p[0]);
-        int n = read(STDIN_FILENO,fileInfo,200);
-        fileInfo[n-1] = '\0';
+        int n = read(STDIN_FILENO,outPutStr,200);
+        outPutStr[n-1] = '\0';
     }
-
 }
