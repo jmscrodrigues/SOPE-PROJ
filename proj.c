@@ -42,7 +42,8 @@ int main(int argc, char **argv, char **envp) {
             break;
           }
         }
-        writeToFileV(event);
+        
+        writeToFileV();
         //TODO
         //FICHEIRO DO -V (vai envolver o envp)
       }
