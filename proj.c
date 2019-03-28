@@ -156,6 +156,7 @@ int main(int argc, char **argv, char **envp) {
         strcpy(str, argv[2]);
         char file[strlen(argv[3])];
         strcpy(file,argv[3]);
+        HParser(argv[3],argv[2]);
         //TODO
         //FAZER APENAS -H
       }

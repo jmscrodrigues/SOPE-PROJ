@@ -128,3 +128,34 @@ void getExternalCommand(char* filename, char* outPutStr, char* commands[]) {
         outPutStr[n-1] = '\0';
     }
 }
+
+char* HParser(char* filename, char* type) {
+
+    char returnStr[3][65];
+    char delim[] = ",";
+    char typeArray[3][7]; //array com os comandos a executar
+    char *ptr = strtok(type, delim);
+    int counter = 0;
+
+
+    while(ptr != NULL)
+    {
+        strcpy(typeArray[counter],ptr);
+        strcat(typeArray[counter],"\0");
+        if(strcmp(typeArray[counter],"sha256")!=0 &&
+                strcmp(typeArray[counter],"md5")!=0 &&
+                strcmp(typeArray[counter],"sha1")!=0) {
+            return '0';
+        }
+
+        ptr = strtok(NULL, delim);
+        counter++;
+    }
+
+    while(counter != 0) {
+
+
+        counter--;
+    }
+    return NULL;
+}
