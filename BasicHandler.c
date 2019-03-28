@@ -5,9 +5,9 @@ char* BasicString(char *filename) {
     int fd1;
 
     off_t size;
-    char modifyDate[20];
-    char creationDate[20];
-    char* fileInfo= malloc(50);//acertas estes valores
+    char modifyDate[MAX_SIZE];
+    char creationDate[MAX_SIZE];
+    char* fileInfo= malloc(MAX_SIZE);//acertas estes valores
     char* returnString = malloc(200);//não sei se é muito ou pouco
     char comma = ',';
     mode_t permission;
@@ -49,30 +49,13 @@ char* BasicString(char *filename) {
     char* fileCommand[] = { "file", filename, 0};
     getExternalCommand(filename, fileInfo,fileCommand);
     char* sizeString= malloc(10);
-    snprintf(sizeString,10,"%d",c);
-
-    /* strcpy(returnString, filename);//nome do ficheiro
-     strcat(returnString,&comma);//virgula
-
-     strcat(returnString,fileInfo+strlen(filename)+2);//info do ficheiro
-     strcat(returnString,&comma);//virgula
-
-     strcat(returnString,sizeString);//tamanho
-     strcat(returnString,&comma);//virgula
-
-     strcat(returnString,permissionOwner);//permissoes
-     strcat(returnString,&comma);//virgula
-
-     strcat(returnString,creationDate);//data criacao
-     strcat(returnString,&comma);//virgula
-
-     strcat(returnString,modifyDate);//data modificacao*/
+    snprintf(sizeString,10,"%ld",c);
 
     snprintf(returnString,200,"%s,%s,%s,%s,%s,%s",filename,fileInfo+strlen(filename)+2,sizeString,permissionOwner,creationDate,modifyDate);
 
-    write(STDOUT_FILENO,returnString, 200);//retornar e mvez de escrever no ecra
-
     close(fd1);
+
+    return returnString;
 }
 
 
@@ -89,9 +72,10 @@ char ChangeToFile(char *filename, char *filename1, char* msg)    // -o
 
     //char *msg = "Ola";
     write(STDOUT_FILENO, msg, strlen(msg));
+    write(STDOUT_FILENO, "\n", 1);
 
     dup2(copy, STDOUT_FILENO);
-
+    
     printf("Data saved on file %s\n", filename );
     printf("Execution records saved on file ... \n");
 
