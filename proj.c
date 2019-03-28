@@ -32,7 +32,7 @@ int main(int argc, char **argv, char **envp) {
         char file[strlen(argv[2])];
         strcpy(file,argv[2]);
         char logfile[100];
-        char *event;
+        char event[100];
         for (int i = 0; envp[i] != NULL; i++) {
           if (strncmp(envp[i], "LOGFILENAME", 11) == 0) {
             strcpy(logfile, envp[i]);
@@ -42,8 +42,10 @@ int main(int argc, char **argv, char **envp) {
             break;
           }
         }
-        
-        writeToFileV();
+        BasicString(file);
+        strcpy(event, "Analized file ");
+        strcat(event, file);
+        writeToFileV(event);
         //TODO
         //FICHEIRO DO -V (vai envolver o envp)
       }

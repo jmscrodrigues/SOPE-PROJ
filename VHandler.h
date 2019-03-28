@@ -10,5 +10,5 @@
 
 void clockInitialTime();
 void getLogFilename(char *name);
-void writeToFileV ();//char *event);
+void writeToFileV (char *event);
 double elapsedTimeCalculator();
