@@ -238,3 +238,11 @@ int main(int argc, char **argv, char **envp) {
   }
 
 }
+
+// -r vai ter que verificar se o opendir() funciona
+// Caso nao funcione, trata como um ficheiro normal (só para fazer alguma cena, pode sempre retornar-se um erro)
+// Caso funcione e abra o diretorio:
+// Processo pai analisa o 1º ficheiro, chamando o fork() (processo(s) filho) para repetir a ação do processo pai
+// Nota: NO proj.c (se -v enabled) criar sempre uma string quando se cria processo filho e analisa FICHEIRO
+// (se -o enabled) criar uma string quando escreve, se ambos enabled, fazer os 2
+// -r tem que receber 2 boolean, 1 para o -o e outro para o -v, as funções tem que ser chamadas durante os processos
