@@ -20,7 +20,11 @@ void RecursiveHandler(char * file, DIR *dir, bool oFlag, bool hFlag, bool vFlag)
         DIR *d = opendir(str);
         printf("Dir: %s\n", dt->d_name);
         if(d != NULL) {
+        //  int pid;
+        //  fork();
+        //  if (pid == 0) {
           RecursiveHandler(str, d, false, false, false);
+        //  }
         }
       }
       else {
