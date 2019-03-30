@@ -1,17 +1,31 @@
 #include "RHandler.h"
 
-void RecursiveHandler(char *dirName, bool oFlag, bool hFlag, bool vFlag) {
+void RecursiveHandler(DIR *dir, bool oFlag, bool hFlag, bool vFlag) {
 
-  DIR *dir;
   struct dirent *dt;
 
-  dir = opendir(dirName);
+  dt = readdir(dir);
+  while (dt != NULL) {
 
-  if (dir == NULL) {
-    perror("-r requires a directory as an argument");
-  }
+    int pid = fork();
 
-  while ((dt = readdir(dr)) != NULL) {
+    if (pid == 0) {
+      if (dt->d_type== DT_REG) {
+        printf("File: %s\n", dt->d_name);
+        //VERIFICAR CONDIÇOES E FAZER AS COISAS
+      }
+      else {
+        DIR* d = opendir(dt->d_name);
+        printf("Dir: %s\n", dt->d_name);
+        RecursiveHandler(d, oFlag, hFlag, vFlag);
+        closedir(d);  //ISTO VAI TER QUE SE RETIRAR, ACHO, PORQUE ELE JA DA CLOSE QUANDO ACABA O DIRETORIO EM SI! NO ENTANTO SE FOR RETIRADO AGORA, ESTOIRA O PC
+      }
+
+    }
+
+  //  dt = readdir(dir);  ISTO ACHO QUE TEM QUE SE ADICIONAR MAS SE SE ADICIONAR AGORA, ESTOIRA O PC TAMBEM :|
+
+    /*
     if (hFlag && vFlag && oFlag) {
       //DO 1
     }
@@ -38,8 +52,10 @@ void RecursiveHandler(char *dirName, bool oFlag, bool hFlag, bool vFlag) {
 
     else if (vFlag) {
       //DO 7
-    }
+    }*/
+
   }
 
+  closedir(dir);
 
 }

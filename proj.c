@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include "BasicHandler.h"
 #include "VHandler.h"
+#include "RHandler.h"
 
 
 int main(int argc, char **argv, char **envp) {
@@ -22,8 +23,13 @@ int main(int argc, char **argv, char **envp) {
       if (strcmp(argv[1], "-r") == 0) {
         char file[strlen(argv[2])];
         strcpy(file,argv[2]);
-        printf("OK");
-        printf("%s", file);
+        DIR *dir = opendir(file);
+        if(dir != NULL) {
+          RecursiveHandler(dir, false, false, false);
+        }
+        else {
+          printf("Not a directory!");
+        }
       //TODO
       //FICHEIRO DO -R
     }
