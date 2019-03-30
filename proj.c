@@ -25,7 +25,7 @@ int main(int argc, char **argv, char **envp) {
         strcpy(file,argv[2]);
         DIR *dir = opendir(file);
         if(dir != NULL) {
-          RecursiveHandler(dir, false, false, false);
+          RecursiveHandler(file, dir, false, false, false);
         }
         else {
           printf("Not a directory!");

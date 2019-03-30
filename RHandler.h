@@ -3,6 +3,7 @@
 #include <dirent.h>
 #include <unistd.h>
 #include <stdbool.h>
+#include <string.h>
 
 
-void RecursiveHandler(DIR *dir, bool oFlag, bool hFlag, bool vFlag);
+void RecursiveHandler(char * file, DIR *dir, bool oFlag, bool hFlag, bool vFlag);
