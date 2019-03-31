@@ -165,9 +165,7 @@ int main(int argc, char **argv, char **envp) {
         strcpy(str, argv[2]);
         char file[strlen(argv[3])];
         strcpy(file,argv[3]);
-        HParser(file,str);
-        //TODO
-        //FAZER APENAS -H
+        printf("%s,%s\n", BasicString(file), HParser(file,str));
       }
 
       else if (strcmp(argv[1], "-o") == 0) {

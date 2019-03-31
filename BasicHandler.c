@@ -5,7 +5,7 @@ char* BasicString(char *filename) {
     int fd1;
 
     off_t size;
-    char modifyDate[MAX_SIZE];
+    char modifyDate[50];
     char creationDate[50];
     char* fileInfo= malloc(MAX_SIZE);//acertas estes valores
     char* returnString = malloc(200);//não sei se é muito ou pouco
@@ -115,32 +115,47 @@ void getExternalCommand(char* filename, char* outPutStr, char* commands[]) {
 
 char* HParser(char* filename, char* type) {
 
-    char returnStr[3][65];
+    char returnStr[3][200];
     char delim[] = ",";
     char typeArray[3][10]; //array com os comandos a executar
-    int counter = 0;
+    int counter = -1;
 
     if(strstr(type,"sha256")!=NULL) {
-        strcpy(typeArray[counter],"sha256sum");
         counter++;
+        strcpy(typeArray[counter],"sha256sum");
     }
     if(strstr(type,"sha1")!=NULL) {
-        strcpy(typeArray[counter],"sha1sum");
         counter++;
+        strcpy(typeArray[counter],"sha1sum");
     }
     if(strstr(type,"md5")!=NULL) {
-        strcpy(typeArray[counter],"md5sum");
         counter++;
+        strcpy(typeArray[counter],"md5sum");
     }
 
-    int countercounter = 0;
+    int icount = 0;
     
-    while(countercounter <= counter) {
-        char* command[] = {typeArray[countercounter], filename,0};
-        getExternalCommand(filename,returnStr[counter],command);
-       // write(STDOUT_FILENO,typeArray[countercounter],strlen(typeArray[countercounter]));
-        //write(STDOUT_FILENO,"\n",1);
-        countercounter++;
+    while(icount <= counter) {
+        char* command[] = {typeArray[icount], filename,0};
+        getExternalCommand(filename,returnStr[icount],command);
+       /* write(STDOUT_FILENO,typeArray[icount],strlen(typeArray[icount]));
+        write(STDOUT_FILENO," ",1);
+        write(STDOUT_FILENO,filename,strlen(filename));
+        write(STDOUT_FILENO,"\n",1);*/ // Apagar eventualmente
+        icount++;
     }
-    return NULL;
+
+    icount = 0;
+
+    char* rt = malloc(140);
+     while(icount <= counter) {
+        strcpy(returnStr[icount],strtok(returnStr[icount], " "));
+        strcat(rt,returnStr[icount]);
+        strcat(rt,",");
+        icount++;
+    }
+    rt[strlen(rt)-1] = '\0';
+    //printf("%s",rt);
+    
+    return rt;
 }
