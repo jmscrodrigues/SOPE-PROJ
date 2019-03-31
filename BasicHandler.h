@@ -10,7 +10,7 @@
 
 #define MAX_SIZE 100
 
-char* BasicString(char *filename);
+char * BasicString(char *filename);
 char ChangeToFile(char *filename, char *filename1, char *msg);
 void getExternalCommand(char* filename, char* fileInfo, char* commands[]);
 char* HParser(char* filename, char* type);

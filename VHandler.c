@@ -4,12 +4,13 @@
 static clock_t initialTime;
 static char filename[MAX_SSIZE];
 
-void writeToFileV (char* event) {
+void writeToFileV () {//char* event) {
   int fd1;
   int pid;
+  int descriptor;
   double elapsedTime;
 
-  fd1 = open(filename, O_WRONLY | O_CREAT, 0750);
+  fd1 = open(filename, O_APPEND | O_WRONLY | O_CREAT, 0750);
 
   if (fd1 == -1) {
     perror("Error opening/creating file!");
@@ -17,8 +18,23 @@ void writeToFileV (char* event) {
 
   pid = getpid();
   elapsedTime = elapsedTimeCalculator();
-  write(fd1, event, 300);
 
+  descriptor = dup(STDOUT_FILENO);
+
+  dup2(fd1, STDOUT_FILENO);
+
+  close(fd1);
+
+  char elTime[MAX_SIZE];
+  sprintf(elTime, "%f", elapsedTime);
+  write(STDOUT_FILENO, elTime, strlen(elTime));
+  write(STDOUT_FILENO, " - ", 3);
+  char pids[MAX_SIZE];
+  sprintf(pids, "%d", pid);
+  write(STDOUT_FILENO, pids, strlen(pids));
+  write(STDOUT_FILENO, " - ", 3);
+
+  dup2(descriptor, STDOUT_FILENO);
 }
 
 void clockInitialTime () {

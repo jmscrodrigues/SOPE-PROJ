@@ -42,7 +42,8 @@ int main(int argc, char **argv, char **envp) {
             break;
           }
         }
-        writeToFileV(event);
+        
+        writeToFileV();
         //TODO
         //FICHEIRO DO -V (vai envolver o envp)
       }
@@ -66,6 +67,7 @@ int main(int argc, char **argv, char **envp) {
           strcpy(file,argv[4]);
           //TODO
           //FICHEIRO DO -R E -H
+          // PRINTF BASICHANDLER
         }
 
         else if (strcmp(argv[2], "-o") == 0) {
@@ -145,7 +147,7 @@ int main(int argc, char **argv, char **envp) {
     if (argc == 2) {
       char file[strlen(argv[1])];
       strcpy(file,argv[1]);
-      BasicString(file);
+      printf("%s\n", BasicString(file));
       //FAZER O BÁSICO APENAS
     }
 
@@ -156,7 +158,8 @@ int main(int argc, char **argv, char **envp) {
         strcpy(str, argv[2]);
         char file[strlen(argv[3])];
         strcpy(file,argv[3]);
-        HParser(argv[3],argv[2]);
+
+        HParser(file,str);
         //TODO
         //FAZER APENAS -H
       }
@@ -166,6 +169,9 @@ int main(int argc, char **argv, char **envp) {
         strcpy(writeFilename,argv[2]);
         char file[strlen(argv[3])];
         strcpy(file,argv[3]);
+
+        printf("%s\n", BasicString(file));
+        ChangeToFile(writeFilename, file, BasicString(file));
         //TODO
         //FAZER APENAS -O
       }
