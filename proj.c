@@ -23,12 +23,11 @@ int main(int argc, char **argv, char **envp) {
       if (strcmp(argv[1], "-r") == 0) {
         char file[strlen(argv[2])];
         strcpy(file,argv[2]);
-        DIR *dir = opendir(file);
-        if(dir != NULL) {
-          RecursiveHandler(file, dir, false, false, false);
-        }
-        else {
-          printf("Not a directory!");
+        char *path;
+        char actualpath[200];
+        path = realpath(file,actualpath);
+        if (path) {
+          RecursiveHandler(path,false, false, false);
         }
       //TODO
       //FICHEIRO DO -R

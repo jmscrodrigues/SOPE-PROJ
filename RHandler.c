@@ -1,8 +1,15 @@
 #include "RHandler.h"
 
-void RecursiveHandler(char * file, DIR *dir, bool oFlag, bool hFlag, bool vFlag) {
+void RecursiveHandler(char * path, bool oFlag, bool hFlag, bool vFlag) {
+
 
   struct dirent *dt;
+  DIR *dir = opendir(path);
+
+  if(dir == NULL) {
+    printf("ERROR");
+    return;
+  }
 
   dt = readdir(dir);
 
@@ -11,22 +18,19 @@ void RecursiveHandler(char * file, DIR *dir, bool oFlag, bool hFlag, bool vFlag)
     if ( (strcmp(dt->d_name, ".") == 0) || (strcmp(dt->d_name, "..") == 0) ) {
 
     }
+
     else  {
       if (dt->d_type == DT_DIR) {
         char str[50];
-        strcpy(str,file);
+        strcpy(str,path);
         strcat(str, "/");
         strcat(str, dt->d_name);
-        DIR *d = opendir(str);
-        printf("Dir: %s\n", dt->d_name);
-        if(d != NULL) {
-        //  int pid;
+        //int pid;
         //  fork();
         //  if (pid == 0) {
-          RecursiveHandler(str, d, false, false, false);
+        RecursiveHandler(str, false, false, false);
         //  }
         }
-      }
       else {
         printf("File: %s\n", dt->d_name);
         //VERIFICAR CONDIÇOES E FAZER AS COISAS

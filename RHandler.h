@@ -6,4 +6,4 @@
 #include <string.h>
 
 
-void RecursiveHandler(char * file, DIR *dir, bool oFlag, bool hFlag, bool vFlag);
+void RecursiveHandler(char * path, bool oFlag, bool hFlag, bool vFlag);
