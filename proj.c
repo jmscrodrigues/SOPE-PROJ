@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include "BasicHandler.h"
 #include "VHandler.h"
+#include "RHandler.h"
 
 
 int main(int argc, char **argv, char **envp) {
@@ -22,8 +23,12 @@ int main(int argc, char **argv, char **envp) {
       if (strcmp(argv[1], "-r") == 0) {
         char file[strlen(argv[2])];
         strcpy(file,argv[2]);
-        printf("OK");
-        printf("%s", file);
+        char *path;
+        char actualpath[200];
+        path = realpath(file,actualpath);
+        if (path) {
+          RecursiveHandler(path,false, false, false);
+        }
       //TODO
       //FICHEIRO DO -R
     }
@@ -32,7 +37,7 @@ int main(int argc, char **argv, char **envp) {
         char file[strlen(argv[2])];
         strcpy(file,argv[2]);
         char logfile[100];
-        char *event;
+        char event[100];
         for (int i = 0; envp[i] != NULL; i++) {
           if (strncmp(envp[i], "LOGFILENAME", 11) == 0) {
             strcpy(logfile, envp[i]);
@@ -42,8 +47,10 @@ int main(int argc, char **argv, char **envp) {
             break;
           }
         }
-        
-        writeToFileV();
+        BasicString(file);
+        strcpy(event, "Analized file ");
+        strcat(event, file);
+        writeToFileV(event);
         //TODO
         //FICHEIRO DO -V (vai envolver o envp)
       }
@@ -238,3 +245,11 @@ int main(int argc, char **argv, char **envp) {
   }
 
 }
+
+// -r vai ter que verificar se o opendir() funciona
+// Caso nao funcione, trata como um ficheiro normal (só para fazer alguma cena, pode sempre retornar-se um erro)
+// Caso funcione e abra o diretorio:
+// Processo pai analisa o 1º ficheiro, chamando o fork() (processo(s) filho) para repetir a ação do processo pai
+// Nota: NO proj.c (se -v enabled) criar sempre uma string quando se cria processo filho e analisa FICHEIRO
+// (se -o enabled) criar uma string quando escreve, se ambos enabled, fazer os 2
+// -r tem que receber 2 boolean, 1 para o -o e outro para o -v, as funções tem que ser chamadas durante os processos

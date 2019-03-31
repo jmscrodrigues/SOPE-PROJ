@@ -6,7 +6,7 @@ char* BasicString(char *filename) {
 
     off_t size;
     char modifyDate[MAX_SIZE];
-    char creationDate[MAX_SIZE];
+    char creationDate[50];
     char* fileInfo= malloc(MAX_SIZE);//acertas estes valores
     char* returnString = malloc(200);//não sei se é muito ou pouco
     char comma = ',';
@@ -75,7 +75,7 @@ char ChangeToFile(char *filename, char *filename1, char* msg)    // -o
     write(STDOUT_FILENO, "\n", 1);
 
     dup2(copy, STDOUT_FILENO);
-    
+
     printf("Data saved on file %s\n", filename );
     printf("Execution records saved on file ... \n");
 

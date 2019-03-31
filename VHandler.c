@@ -4,7 +4,7 @@
 static clock_t initialTime;
 static char filename[MAX_SSIZE];
 
-void writeToFileV () {//char* event) {
+void writeToFileV (char* event) {
   int fd1;
   int pid;
   int descriptor;
@@ -33,6 +33,7 @@ void writeToFileV () {//char* event) {
   sprintf(pids, "%d", pid);
   write(STDOUT_FILENO, pids, strlen(pids));
   write(STDOUT_FILENO, " - ", 3);
+  write(STDOUT_FILENO, event, strlen(event));
 
   dup2(descriptor, STDOUT_FILENO);
 }
