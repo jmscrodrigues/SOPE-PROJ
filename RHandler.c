@@ -13,30 +13,29 @@ void RecursiveHandler(char * path, bool oFlag, bool hFlag, bool vFlag) {
 
   dt = readdir(dir);
 
-  while ((dt = readdir(dir)) != NULL) {
+  while (dt!= NULL) {
 
-    if ( (strcmp(dt->d_name, ".") == 0) || (strcmp(dt->d_name, "..") == 0) ) {
-
-    }
-
-    else  {
+    if ( (strcmp(dt->d_name, ".") != 0) && (strcmp(dt->d_name, "..") != 0) ) {
       if (dt->d_type == DT_DIR) {
-        char str[50];
-        strcpy(str,path);
-        strcat(str, "/");
-        strcat(str, dt->d_name);
-        //int pid;
-        //  fork();
-        //  if (pid == 0) {
-        RecursiveHandler(str, false, false, false);
-        //  }
+        printf("Dir: %s\n", dt->d_name);
+        int pid = fork();
+          if (pid == 0) {
+            char str[50];
+            strcpy(str,path);
+            strcat(str, "/");
+            strcat(str, dt->d_name);
+            RecursiveHandler(str, false, false, false);
+            exit(0);
+          }
         }
       else {
         printf("File: %s\n", dt->d_name);
         //VERIFICAR CONDIÇOES E FAZER AS COISAS
       }
+
     }
 
+    dt = readdir(dir);
 
 /*
     int pid = fork();
