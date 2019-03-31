@@ -117,31 +117,30 @@ char* HParser(char* filename, char* type) {
 
     char returnStr[3][65];
     char delim[] = ",";
-    char typeArray[3][9]; //array com os comandos a executar
-    char *ptr = strtok(type, delim);
+    char typeArray[3][10]; //array com os comandos a executar
     int counter = 0;
 
-    while(ptr != NULL)
-    {
-        strcpy(typeArray[counter],ptr);
-        strcat(typeArray[counter],"\0");
-        if(strcmp(typeArray[counter],"sha256")!=0 &&
-                strcmp(typeArray[counter],"md5")!=0 &&
-                strcmp(typeArray[counter],"sha1")!=0) {
-            return 'c';
-        }
-        strcat(typeArray[counter],"sum");
-        printf("%s", typeArray[counter]);
-
-        ptr = strtok(NULL, delim);
+    if(strstr(type,"sha256")!=NULL) {
+        strcpy(typeArray[counter],"sha256sum");
+        counter++;
+    }
+    if(strstr(type,"sha1")!=NULL) {
+        strcpy(typeArray[counter],"sha1sum");
+        counter++;
+    }
+    if(strstr(type,"md5")!=NULL) {
+        strcpy(typeArray[counter],"md5sum");
         counter++;
     }
 
-    while(counter > 0) {
-        char* command[] = {typeArray[counter], filename,0};
+    int countercounter = 0;
+    
+    while(countercounter <= counter) {
+        char* command[] = {typeArray[countercounter], filename,0};
         getExternalCommand(filename,returnStr[counter],command);
-        printf("%s",typeArray[counter]);
-        counter--;
+       // write(STDOUT_FILENO,typeArray[countercounter],strlen(typeArray[countercounter]));
+        //write(STDOUT_FILENO,"\n",1);
+        countercounter++;
     }
     return NULL;
 }
