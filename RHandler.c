@@ -7,7 +7,7 @@ void RecursiveHandler(char * path, bool oFlag, bool hFlag, bool vFlag) {
   DIR *dir = opendir(path);
 
   if(dir == NULL) {
-    printf("ERROR");
+    printf("ERROR, not a directory\n");
     return;
   }
 
