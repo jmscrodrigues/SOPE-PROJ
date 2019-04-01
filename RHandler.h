@@ -7,4 +7,5 @@
 #include <stdlib.h>
 
 
+void getFileToWrite(char * file);
 void RecursiveHandler(char * path, bool oFlag, bool hFlag, bool vFlag);

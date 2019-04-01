@@ -8,9 +8,9 @@
 #include <time.h>
 #include <string.h>
 
-#define MAX_SIZE 100
+#define MAX_SIZE 200
 
 char * BasicString(char *filename);
-char ChangeToFile(char *filename, char *filename1, char *msg);
+char ChangeToFile(char *filename, char *msg);
 void getExternalCommand(char* filename, char* fileInfo, char* commands[]);
 char* HParser(char* filename, char* type);

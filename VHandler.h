@@ -6,7 +6,7 @@
 #include <string.h>
 #include <time.h>
 
-#define MAX_SIZE 100
+#define MAX_SIZE 200
 
 void clockInitialTime();
 void getLogFilename(char *name);

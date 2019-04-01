@@ -1,5 +1,7 @@
 #include "RHandler.h"
 
+static char filetoWrite[100];
+
 void RecursiveHandler(char * path, bool oFlag, bool hFlag, bool vFlag) {
 
 
@@ -30,63 +32,59 @@ void RecursiveHandler(char * path, bool oFlag, bool hFlag, bool vFlag) {
         }
       else {
         printf("File: %s\n", dt->d_name);
-        //VERIFICAR CONDIÇOES E FAZER AS COISAS
-      }
+        if (hFlag && vFlag && oFlag) {
+          //analise H
+          //escrever no o
+          //escreve no v
+
+          //VAI SINALIZAR USR2
+        }
+
+        else if (hFlag && vFlag) {
+          //analise h
+          //escreve no v
+        }
+
+        else if (hFlag && oFlag) {
+          //analise h
+          //escreve no o
+
+          //VAI SINALIZAR USR2
+        }
+
+        else if (oFlag && vFlag) {
+          BasicString(dt->d_name); //??, TALVEZ STRCAT(PATH, "/"); STRCAT(PATH,"DT->D_NAME");
+          //escreve no v e o
+        }
+
+        else if (hFlag) {
+          //analise h
+        }
+
+        else if (oFlag) {
+          //analise normal
+          //escreve no o
+
+          //VAI SINALIZAR USR2
+        }
+
+        else if (vFlag) {
+          //analise normal
+          //escreve no v
+        }
 
     }
+  }
 
     dt = readdir(dir);
 
-/*
-    int pid = fork();
 
-    if (pid == 0) {
-      if (dt->d_type== DT_REG) {
-        printf("File: %s\n", dt->d_name);
-        //VERIFICAR CONDIÇOES E FAZER AS COISAS
-      }
-      else {
-        DIR* d = opendir(dt->d_name);
-        printf("Dir: %s\n", dt->d_name);
-        RecursiveHandler(d, oFlag, hFlag, vFlag);
-        closedir(d);  //ISTO VAI TER QUE SE RETIRAR, ACHO, PORQUE ELE JA DA CLOSE QUANDO ACABA O DIRETORIO EM SI! NO ENTANTO SE FOR RETIRADO AGORA, ESTOIRA O PC
-      }
-
-    }
-
-  //  dt = readdir(dir);  ISTO ACHO QUE TEM QUE SE ADICIONAR MAS SE SE ADICIONAR AGORA, ESTOIRA O PC TAMBEM :|
-
-    /*
-    if (hFlag && vFlag && oFlag) {
-      //DO 1
-    }
-
-    else if (hFlag && vFlag) {
-      //DO 2
-    }
-
-    else if (hFlag && oFlag) {
-      //DO 3
-    }
-
-    else if (oFlag && vFlag) {
-      //DO 4
-    }
-
-    else if (hFlag) {
-      //DO 5
-    }
-
-    else if (oFlag) {
-      //DO 6
-    }
-
-    else if (vFlag) {
-      //DO 7
-    }*/
 
   }
 
   closedir(dir);
+}
 
+void getFileToWrite(char * file) {
+  strcpy(filetoWrite, file);
 }

@@ -8,7 +8,7 @@ char* BasicString(char *filename) {
     char modifyDate[50];
     char creationDate[50];
     char* fileInfo= malloc(MAX_SIZE);//acertas estes valores
-    char* returnString = malloc(200);//não sei se é muito ou pouco
+    char* returnString = malloc(300);//não sei se é muito ou pouco
     char comma = ',';
     mode_t permission;
     char permissionOwner[3];
@@ -59,7 +59,7 @@ char* BasicString(char *filename) {
 }
 
 
-char ChangeToFile(char *filename, char *filename1, char* msg)    // -o
+char ChangeToFile(char *filename, char* msg)    // -o
 {
     int copy;
     int file = open(filename, O_APPEND | O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR);
@@ -134,7 +134,7 @@ char* HParser(char* filename, char* type) {
     }
 
     int icount = 0;
-    
+
     while(icount <= counter) {
         char* command[] = {typeArray[icount], filename,0};
         getExternalCommand(filename,returnStr[icount],command);
@@ -156,6 +156,6 @@ char* HParser(char* filename, char* type) {
     }
     rt[strlen(rt)-1] = '\0';
     //printf("%s",rt);
-    
+
     return rt;
 }

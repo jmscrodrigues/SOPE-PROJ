@@ -56,7 +56,7 @@ int main(int argc, char **argv, char **envp) {
       }
 
       else  {
-        printf("Vamos ter que lidar com erro??");
+        printf("Vamos ter que lidar com erro??v ");
         return -1;
       }
 
@@ -78,15 +78,14 @@ int main(int argc, char **argv, char **envp) {
         }
 
         else if (strcmp(argv[2], "-o") == 0) {
-          char writeFilename[strlen(argv[3])];
-          strcpy(writeFilename,argv[3]);
+          getFileToWrite(argv[3]);
           char file[strlen(argv[4])];
           strcpy(file,argv[4]);
           //TODO
           //FICHEIRO DO -R E -O
         }
         else  {
-          printf("Vamos ter que lidar com erro??");
+          printf("Vamos ter que lidar com erro?? o");
           return -1;
         }
       }
@@ -174,8 +173,7 @@ int main(int argc, char **argv, char **envp) {
         char file[strlen(argv[3])];
         strcpy(file,argv[3]);
 
-        printf("%s\n", BasicString(file));
-        ChangeToFile(writeFilename, file, BasicString(file));
+        ChangeToFile(writeFilename, BasicString(file));
         //TODO
         //FAZER APENAS -O
       }
