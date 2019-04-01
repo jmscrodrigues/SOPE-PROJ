@@ -100,6 +100,13 @@ void RecursiveHandler(char * path, bool oFlag, bool hFlag, bool vFlag) {
           strcat(str1, dt->d_name);
           writeToFileV(str1);
         }
+        else {
+          char str[50];
+          strcpy(str,path);
+          strcat(str, "/");
+          strcat(str, dt->d_name);
+          printf("%s\n",BasicString(str));
+        }
 
     }
   }

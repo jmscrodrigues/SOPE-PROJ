@@ -13,6 +13,17 @@ char* BasicString(char *filename) {
     mode_t permission;
     char permissionOwner[3];
     long c;
+
+    char * defFile = malloc(300);
+
+    if (strchr(filename, '/') == NULL) {
+      strcpy(defFile, filename);
+    }
+    else{
+      strcpy(defFile, strrchr(filename, '/'));
+      defFile+=1;
+    }
+
     fd1 = open(filename, O_RDWR);
 
     fstat(fd1, &ss);
@@ -51,7 +62,7 @@ char* BasicString(char *filename) {
     char* sizeString= malloc(10);
     snprintf(sizeString,10,"%ld",c);
 
-    snprintf(returnString,200,"%s,%s,%s,%s,%s,%s",filename,fileInfo+strlen(filename)+2,sizeString,permissionOwner,creationDate,modifyDate);
+    snprintf(returnString,200,"%s,%s,%s,%s,%s,%s",defFile,fileInfo+strlen(filename)+2,sizeString,permissionOwner,creationDate,modifyDate);
 
     close(fd1);
 
