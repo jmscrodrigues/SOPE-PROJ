@@ -1,6 +1,7 @@
 #include "RHandler.h"
 
-static char filetoWrite[100];
+static char fileToWrite[100];
+static char hFlags[50];
 
 void RecursiveHandler(char * path, bool oFlag, bool hFlag, bool vFlag) {
 
@@ -26,51 +27,78 @@ void RecursiveHandler(char * path, bool oFlag, bool hFlag, bool vFlag) {
             strcpy(str,path);
             strcat(str, "/");
             strcat(str, dt->d_name);
-            RecursiveHandler(str, false, false, false);
+            RecursiveHandler(str, oFlag, hFlag, vFlag);
             exit(0);
           }
         }
       else {
         printf("File: %s\n", dt->d_name);
-        if (hFlag && vFlag && oFlag) {
+
+
+        if ((hFlag && vFlag && oFlag) == true) {
           //analise H
           //escrever no o
           //escreve no v
-
+          printf("hvo");
           //VAI SINALIZAR USR2
         }
 
-        else if (hFlag && vFlag) {
+        else if ((hFlag && vFlag) == true) {
           //analise h
           //escreve no v
+          printf("hv");
         }
 
-        else if (hFlag && oFlag) {
+        else if ((hFlag && oFlag) == true) {
           //analise h
           //escreve no o
+          printf("ho");
 
           //VAI SINALIZAR USR2
         }
 
-        else if (oFlag && vFlag) {
-          BasicString(dt->d_name); //??, TALVEZ STRCAT(PATH, "/"); STRCAT(PATH,"DT->D_NAME");
-          //escreve no v e o
+        else if ((oFlag && vFlag) == true) {
+          char str[50];
+          strcpy(str,path);
+          strcat(str, "/");
+          strcat(str, dt->d_name);
+
+          ChangeToFile(fileToWrite,BasicString(str)); //??, TALVEZ STRCAT(PATH, "/"); STRCAT(PATH,"DT->D_NAME");
+
+          char strwr[50] = "Analized file ";
+          strcat(strwr, dt->d_name);
+          writeToFileV(strwr);
+          char strwr1[50] = "Wrote in file ";
+          strcat(strwr1, fileToWrite);
+          writeToFileV(strwr1);
         }
 
-        else if (hFlag) {
+        else if (hFlag == true) {
           //analise h
+          printf("h");
         }
 
-        else if (oFlag) {
-          //analise normal
-          //escreve no o
+        else if (oFlag == true) {
+          char str[50];
+          strcpy(str,path);
+          strcat(str, "/");
+          strcat(str, dt->d_name);
+
+          ChangeToFile(fileToWrite,BasicString(str));
 
           //VAI SINALIZAR USR2
         }
 
-        else if (vFlag) {
-          //analise normal
-          //escreve no v
+        else if (vFlag == true) {
+          printf("v\n");
+          char str[50];
+          strcpy(str,path);
+          strcat(str, "/");
+          strcat(str, dt->d_name);
+          BasicString(str);
+          char str1[50] = "Analized file ";
+          strcat(str1, dt->d_name);
+          writeToFileV(str1);
         }
 
     }
@@ -86,5 +114,9 @@ void RecursiveHandler(char * path, bool oFlag, bool hFlag, bool vFlag) {
 }
 
 void getFileToWrite(char * file) {
-  strcpy(filetoWrite, file);
+  strcpy(fileToWrite, file);
+}
+
+void getHFlags(char * flags) {
+  strcpy(hFlags, flags);
 }

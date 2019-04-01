@@ -18,8 +18,8 @@ char* BasicString(char *filename) {
     fstat(fd1, &ss);
 
     size = ss.st_size; //FILE_SIZE (nao sei porque mas se tiver só 1 caracter aparece que tem 2 e assi por diante!)
-    strftime(modifyDate, 20, "%d-%m-%yT%H:%M:%S", localtime(&(ss.st_mtime))); //DATA DE ULTIMA MODIFICAÇAO
-    strftime(creationDate, 20, "%d-%m-%yT%H:%M:%S", localtime(&(ss.st_ctime))); //DATA DE CRIACAO
+    strftime(modifyDate, 20, "%y-%m-%dT%H:%M:%S", localtime(&(ss.st_mtime))); //DATA DE ULTIMA MODIFICAÇAO
+    strftime(creationDate, 20, "%y-%m-%dT%H:%M:%S", localtime(&(ss.st_ctime))); //DATA DE CRIACAO
 
     permission = ss.st_mode;
 

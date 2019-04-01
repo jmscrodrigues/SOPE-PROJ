@@ -29,11 +29,13 @@ void writeToFileV (char* event) {
   sprintf(elTime, "%f", elapsedTime);
   write(STDOUT_FILENO, elTime, strlen(elTime));
   write(STDOUT_FILENO, " - ", 3);
+
   char pids[MAX_SIZE];
   sprintf(pids, "%d", pid);
   write(STDOUT_FILENO, pids, strlen(pids));
   write(STDOUT_FILENO, " - ", 3);
   write(STDOUT_FILENO, event, strlen(event));
+  write(STDOUT_FILENO, "\n", 1);
 
   dup2(descriptor, STDOUT_FILENO);
 }
