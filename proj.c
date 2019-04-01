@@ -29,8 +29,6 @@ int main(int argc, char **argv, char **envp) {
         if (path) {
           RecursiveHandler(path,false, false, false);
         }
-      //TODO
-      //FICHEIRO DO -R
     }
 
       else if (strcmp(argv[1], "-v") == 0) {
@@ -51,10 +49,7 @@ int main(int argc, char **argv, char **envp) {
         strcpy(event, "Analized file ");
         strcat(event, file);
         writeToFileV(event);
-        //TODO
-        //FICHEIRO DO -V (vai envolver o envp)
       }
-
       else  {
         printf("Vamos ter que lidar com erro??v ");
         return -1;
@@ -71,10 +66,17 @@ int main(int argc, char **argv, char **envp) {
           getHFlags(argv[3]);
           char file[strlen(argv[4])];
           strcpy(file,argv[4]);
-          //TODO
-          //FICHEIRO DO -R E -H
+
+          char *path;
+          char actualpath[200];
+          path = realpath(file,actualpath);
+          if (path) {
+            RecursiveHandler(path,false, true, false);
+          }
+
           // PRINTF BASICHANDLER
         }
+
 
         else if (strcmp(argv[2], "-o") == 0) {
           getFileToWrite(argv[3]);
@@ -86,8 +88,7 @@ int main(int argc, char **argv, char **envp) {
           if (path) {
             RecursiveHandler(path,true, false, false);
           }
-          //TODO
-          //FICHEIRO DO -R E -O
+
         }
         else  {
           printf("Vamos ter que lidar com erro?? o");
@@ -129,8 +130,14 @@ int main(int argc, char **argv, char **envp) {
         getFileToWrite(argv[5]);
         char file[strlen(argv[6])];
         strcpy(file,argv[6]);
-        //TODO
-        //FICHEIRO DO -R -H E -O
+
+        char *path;
+        char actualpath[200];
+        path = realpath(file,actualpath);
+        if (path) {
+          RecursiveHandler(path,true, true, false);
+        }
+
     }
 
       else if (strcmp(argv[5], "-v") == 0){
@@ -202,7 +209,6 @@ int main(int argc, char **argv, char **envp) {
         if (path) {
           RecursiveHandler(path,false, false, true);
         }
-        //TODO
         //FAZER FICHEIRO -R E -V SIMULTANEAMENTE (envolve envp -V)
       }
       else  {
@@ -247,7 +253,7 @@ int main(int argc, char **argv, char **envp) {
           RecursiveHandler(path,false, true, true);
         }
       }
-      
+
       else if (((strcmp(argv[1], "-r") == 0) && (strcmp(argv[2], "-o") == 0)) && (strcmp(argv[4], "-v") == 0)) {
         getFileToWrite(argv[3]);
         char file[strlen(argv[5])];
@@ -271,15 +277,15 @@ int main(int argc, char **argv, char **envp) {
           RecursiveHandler(path,true, false, true);
         }
 
-
-        //TODO
         //FAZER -R -O E -V (usar envp para o -V)
+
       }
       else  {
         printf("Vamos ter que lidar com erro??");
         return -1;
       }
     }
+    
     else  {
       if (((strcmp(argv[1], "-r") == 0) && (strcmp(argv[2], "-h") == 0)) &&(strcmp(argv[4], "-o") == 0) && (strcmp(argv[6], "-v") == 0)) {
         getHFlags(argv[3]);
