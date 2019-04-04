@@ -7,14 +7,14 @@ char* BasicString(char *filename) {
     off_t size;
     char modifyDate[50];
     char creationDate[50];
-    char* fileInfo= malloc(MAX_SIZE);//acertas estes valores
-    char* returnString = malloc(300);//não sei se é muito ou pouco
+    char* fileInfo= calloc(MAX_SIZE, 1);//acertas estes valores
+    char* returnString = calloc(MAX_SIZE, 1);//não sei se é muito ou pouco
     char comma = ',';
     mode_t permission;
     char permissionOwner[3];
     long c;
 
-    char * defFile = malloc(300);
+    char * defFile =  calloc(200, 1);
 
     if (strchr(filename, '/') == NULL) {
       strcpy(defFile, filename);
@@ -130,6 +130,7 @@ char* HParser(char* filename, char* type) {
     char delim[] = ",";
     char typeArray[3][10]; //array com os comandos a executar
     int counter = -1;
+    char * basic= malloc(MAX_SIZE);
 
     if(strstr(type,"sha256")!=NULL) {
         counter++;
@@ -143,6 +144,8 @@ char* HParser(char* filename, char* type) {
         counter++;
         strcpy(typeArray[counter],"md5sum");
     }
+
+    strcpy(basic, BasicString(filename));
 
     int icount = 0;
 
@@ -158,7 +161,7 @@ char* HParser(char* filename, char* type) {
 
     icount = 0;
 
-    char* rt = malloc(140);
+    char* rt = calloc(512, 1);
      while(icount <= counter) {
         strcpy(returnStr[icount],strtok(returnStr[icount], " "));
         strcat(rt,returnStr[icount]);
@@ -168,5 +171,8 @@ char* HParser(char* filename, char* type) {
     rt[strlen(rt)-1] = '\0';
     //printf("%s",rt);
 
-    return rt;
+    strcat(basic,",");
+    strcat(basic, rt);
+
+    return basic;
 }

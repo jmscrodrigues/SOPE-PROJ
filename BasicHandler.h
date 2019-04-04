@@ -8,7 +8,7 @@
 #include <time.h>
 #include <string.h>
 
-#define MAX_SIZE 200
+#define MAX_SIZE 4096
 
 char * BasicString(char *filename);
 char ChangeToFile(char *filename, char *msg);

@@ -25,12 +25,12 @@ void writeToFileV (char* event) {
 
   close(fd1);
 
-  char elTime[MAX_SIZE];
+  char elTime[MAX_SSIZE];
   sprintf(elTime, "%f", elapsedTime);
   write(STDOUT_FILENO, elTime, strlen(elTime));
   write(STDOUT_FILENO, " - ", 3);
 
-  char pids[MAX_SIZE];
+  char pids[MAX_SSIZE];
   sprintf(pids, "%d", pid);
   write(STDOUT_FILENO, pids, strlen(pids));
   write(STDOUT_FILENO, " - ", 3);
