@@ -8,10 +8,10 @@ char* BasicString(char *filename) {
     char modifyDate[50];
     char creationDate[50];
     char* fileInfo= calloc(MAX_SIZE, 1);//acertas estes valores
-    char* returnString = calloc(MAX_SIZE, 1);//não sei se é muito ou pouco
+    char* returnString = calloc(MAX_SIZE,1);//não sei se é muito ou pouco
     char comma = ',';
     mode_t permission;
-    char permissionOwner[3];
+    char permissionOwner[5];
     long c;
 
     char * defFile =  calloc(200, 1);
@@ -29,12 +29,14 @@ char* BasicString(char *filename) {
     fstat(fd1, &ss);
 
     size = ss.st_size; //FILE_SIZE (nao sei porque mas se tiver só 1 caracter aparece que tem 2 e assi por diante!)
-    strftime(modifyDate, 20, "%y-%m-%dT%H:%M:%S", localtime(&(ss.st_mtime))); //DATA DE ULTIMA MODIFICAÇAO
-    strftime(creationDate, 20, "%y-%m-%dT%H:%M:%S", localtime(&(ss.st_ctime))); //DATA DE CRIACAO
+    strftime(modifyDate, 50, "%y-%m-%dT%H:%M:%S", localtime(&(ss.st_mtime))); //DATA DE ULTIMA MODIFICAÇAO
+    strftime(creationDate, 50, "%y-%m-%dT%H:%M:%S", localtime(&(ss.st_ctime))); //DATA DE CRIACAO
 
     permission = ss.st_mode;
 
+    char not[] = "-";
     if ((permission & S_IRUSR) == 0) {
+      strcat(permissionOwner, not);
     }
     else {
         char read[] = "r";
@@ -42,6 +44,7 @@ char* BasicString(char *filename) {
     }
 
     if ((permission & S_IWUSR) == 0) {
+      strcat(permissionOwner, not);
     }
     else {
         char write[] = "w";
@@ -49,6 +52,7 @@ char* BasicString(char *filename) {
     }
 
     if ((permission & S_IXUSR) == 0) {
+      strcat(permissionOwner, not);
     }
     else {
         char execute[] = "x";
@@ -62,9 +66,12 @@ char* BasicString(char *filename) {
     char* sizeString= malloc(10);
     snprintf(sizeString,10,"%ld",c);
 
-    snprintf(returnString,200,"%s,%s,%s,%s,%s,%s",defFile,fileInfo+strlen(filename)+2,sizeString,permissionOwner,creationDate,modifyDate);
+    snprintf(returnString,4096,"%s,%s,%s,%s,%s,%s",defFile,fileInfo+strlen(filename)+2,sizeString,permissionOwner,creationDate,modifyDate);
 
     close(fd1);
+
+    free(fileInfo);
+    free(defFile);
 
     return returnString;
 }

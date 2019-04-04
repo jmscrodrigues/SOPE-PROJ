@@ -2,6 +2,8 @@
 
 static char fileToWrite[100];
 static char hFlags[50];
+static int direc = 0;
+static int files = 0;
 
 void RecursiveHandler(char * path, bool oFlag, bool hFlag, bool vFlag) {
 
@@ -14,7 +16,13 @@ void RecursiveHandler(char * path, bool oFlag, bool hFlag, bool vFlag) {
     return;
   }
 
+
   dt = readdir(dir);
+  if (oFlag) {
+    direc++;
+    //EMITE SINAL USR1
+    //Handler dá print da mensagem com nº de direc e files
+  }
 
   while (dt!= NULL) {
 
@@ -23,7 +31,7 @@ void RecursiveHandler(char * path, bool oFlag, bool hFlag, bool vFlag) {
       //  printf("Dir: %s\n", dt->d_name);
         int pid = fork();
           if (pid == 0) {
-            char str[50];
+            char *str = calloc(50,1);
             strcpy(str,path);
             strcat(str, "/");
             strcat(str, dt->d_name);
@@ -32,38 +40,49 @@ void RecursiveHandler(char * path, bool oFlag, bool hFlag, bool vFlag) {
           }
         }
       else {
-      //  printf("File: %s\n", dt->d_name);
 
 
         if ((hFlag && vFlag && oFlag) == true) {
-          //analise H
-          //escrever no o
-          //escreve no v
-          printf("hvo");
-          //VAI SINALIZAR USR2
-        }
-
-        else if ((hFlag && vFlag) == true) {
-          //analise h
-          //escreve no v
-          printf("hv");
-        }
-
-        else if ((hFlag && oFlag) == true) {
-        /*  char str[50];
+          char *str = calloc(50,1);
           strcpy(str,path);
           strcat(str, "/");
           strcat(str, dt->d_name);
 
-          ChangeToFile(fileToWrite,BasicString(str));
-          */
-          printf("ho");
+          ChangeToFile(fileToWrite,HParser(str, hFlags));
 
+          char strwr[50] = "Analized file ";
+          strcat(strwr, dt->d_name);
+          writeToFileV(strwr);
+
+          files++;
+          //VAI SINALIZAR USR2
+        }
+
+        else if ((hFlag && vFlag) == true) {
+          char *str = calloc(50,1);
+          strcpy(str,path);
+          strcat(str, "/");
+          strcat(str, dt->d_name);
+
+          printf("%s\n", HParser(str, hFlags));
+          char strwr[50] = "Analized file ";
+          strcat(strwr, dt->d_name);
+          writeToFileV(strwr);
+        }
+
+        else if ((hFlag && oFlag) == true) {
+          char *str = calloc(50,1);
+          strcpy(str,path);
+          strcat(str, "/");
+          strcat(str, dt->d_name);
+
+          ChangeToFile(fileToWrite,HParser(str, hFlags));
+          files++;
           //VAI SINALIZAR USR2
         }
 
         else if ((oFlag && vFlag) == true) {
-          char str[50];
+          char *str = calloc(50,1);
           strcpy(str,path);
           strcat(str, "/");
           strcat(str, dt->d_name);
@@ -76,31 +95,33 @@ void RecursiveHandler(char * path, bool oFlag, bool hFlag, bool vFlag) {
           char strwr1[50] = "Wrote in file ";
           strcat(strwr1, fileToWrite);
           writeToFileV(strwr1);
+          files++;
+          //VAI SINALIZAR USR2
         }
 
         else if (hFlag == true) {
-          char str[50];
+          char *str = calloc(50,1);
           strcpy(str,path);
           strcat(str, "/");
           strcat(str, dt->d_name);
           printf("%s\n", HParser(str, hFlags));
-          printf("h\n");
+
         }
 
         else if (oFlag == true) {
-          char str[50];
+          char *str = calloc(50,1);
           strcpy(str,path);
           strcat(str, "/");
           strcat(str, dt->d_name);
 
           ChangeToFile(fileToWrite,BasicString(str));
-
+          files++;
           //VAI SINALIZAR USR2
         }
 
         else if (vFlag == true) {
-          printf("v\n");
-          char str[50];
+          //printf("v\n");
+          char *str = calloc(50,1);
           strcpy(str,path);
           strcat(str, "/");
           strcat(str, dt->d_name);
@@ -110,7 +131,7 @@ void RecursiveHandler(char * path, bool oFlag, bool hFlag, bool vFlag) {
           writeToFileV(str1);
         }
         else {
-          char str[50];
+          char *str = calloc(50,1);
           strcpy(str,path);
           strcat(str, "/");
           strcat(str, dt->d_name);
@@ -125,7 +146,6 @@ void RecursiveHandler(char * path, bool oFlag, bool hFlag, bool vFlag) {
 
 
   }
-
   closedir(dir);
 }
 
