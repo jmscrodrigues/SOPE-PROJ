@@ -1,12 +1,19 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <signal.h>
 #include "BasicHandler.h"
 #include "VHandler.h"
 #include "RHandler.h"
 
+void sigint_handler(int signo) {  
+  printf("SIGINT received ... \n"); 
+  exit(2); 
+}
 
 int main(int argc, char **argv, char **envp) {
+
+  signal(SIGINT, sigint_handler);
 
   clockInitialTime();
 

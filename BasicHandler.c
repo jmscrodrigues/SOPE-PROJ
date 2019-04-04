@@ -63,7 +63,7 @@ char* BasicString(char *filename) {
 
     char* fileCommand[] = { "file", filename, 0};
     getExternalCommand(filename, fileInfo,fileCommand);
-    char* sizeString= malloc(10);
+    char* sizeString= calloc(10,1);
     snprintf(sizeString,10,"%ld",c);
 
     snprintf(returnString,4096,"%s,%s,%s,%s,%s,%s",defFile,fileInfo+strlen(filename)+2,sizeString,permissionOwner,creationDate,modifyDate);
@@ -71,7 +71,6 @@ char* BasicString(char *filename) {
     close(fd1);
 
     free(fileInfo);
-    free(defFile);
 
     return returnString;
 }
