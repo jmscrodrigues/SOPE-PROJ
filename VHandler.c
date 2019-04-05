@@ -1,8 +1,8 @@
 #include "VHandler.h"
 
-#define MAX_SSIZE 100
+#define MAX_SIZE1 300
 static clock_t initialTime;
-static char filename[MAX_SSIZE];
+static char filename[MAX_SIZE1];
 
 void writeToFileV (char* event) {
   int fd1;
@@ -25,12 +25,12 @@ void writeToFileV (char* event) {
 
   close(fd1);
 
-  char elTime[MAX_SSIZE];
+  char elTime[MAX_SIZE1];
   sprintf(elTime, "%f", elapsedTime);
   write(STDOUT_FILENO, elTime, strlen(elTime));
   write(STDOUT_FILENO, " - ", 3);
 
-  char pids[MAX_SSIZE];
+  char pids[MAX_SIZE1];
   sprintf(pids, "%d", pid);
   write(STDOUT_FILENO, pids, strlen(pids));
   write(STDOUT_FILENO, " - ", 3);

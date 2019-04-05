@@ -4,7 +4,7 @@ static char fileToWrite[100];
 static char hFlags[50];
 static int direc = 0;
 static int files = 0;
-static int inicialpid;
+static int initialPid;
 
 void RecursiveHandler(char * path, bool oFlag, bool hFlag, bool vFlag) {
 
@@ -27,10 +27,13 @@ void RecursiveHandler(char * path, bool oFlag, bool hFlag, bool vFlag) {
 
     if ( (strcmp(dt->d_name, ".") != 0) && (strcmp(dt->d_name, "..") != 0) ) {
       if (dt->d_type == DT_DIR) {
+
+
       //  printf("Dir: %s\n", dt->d_name);
-      if (signal(SIGUSR1, signalUSR1) != SIG_ERR){
-        kill(getpid(), SIGUSR1);
-      }
+
+        if (oFlag) {
+          kill(initialPid,SIGUSR1);
+        }
         int pid = fork();
 
           if (pid == 0) {
@@ -64,7 +67,7 @@ void RecursiveHandler(char * path, bool oFlag, bool hFlag, bool vFlag) {
 
           //files++;
           //VAI SINALIZAR USR2
-          signalUSR2();
+          kill(initialPid,SIGUSR2);
         }
 
         else if ((hFlag && vFlag) == true) {
@@ -84,11 +87,11 @@ void RecursiveHandler(char * path, bool oFlag, bool hFlag, bool vFlag) {
           strcpy(str,path);
           strcat(str, "/");
           strcat(str, dt->d_name);
-
           ChangeToFile(fileToWrite,HParser(str, hFlags));
+          kill(initialPid,SIGUSR2);
+          sleep(2);
           //files++;
           //VAI SINALIZAR USR2
-          signalUSR2();
         }
 
         else if ((oFlag && vFlag) == true) {
@@ -105,9 +108,9 @@ void RecursiveHandler(char * path, bool oFlag, bool hFlag, bool vFlag) {
           char strwr1[50] = "Wrote in file ";
           strcat(strwr1, fileToWrite);
           writeToFileV(strwr1);
+          kill(initialPid,SIGUSR2);
           //files++;
           //VAI SINALIZAR USR2
-          signalUSR2();
         }
 
         else if (hFlag == true) {
@@ -124,11 +127,10 @@ void RecursiveHandler(char * path, bool oFlag, bool hFlag, bool vFlag) {
           strcpy(str,path);
           strcat(str, "/");
           strcat(str, dt->d_name);
-
           ChangeToFile(fileToWrite,BasicString(str));
+          kill(initialPid,SIGUSR2);
           //files++;
           //VAI SINALIZAR USR2
-          signalUSR2();
         }
 
         else if (vFlag == true) {
@@ -149,10 +151,11 @@ void RecursiveHandler(char * path, bool oFlag, bool hFlag, bool vFlag) {
           strcat(str, dt->d_name);
           printf("%s\n",BasicString(str));
         }
-
     }
   }
-
+    if (oFlag && (getpid() == initialPid)) {
+      sleep(7);
+    }
     dt = readdir(dir);
 
 
@@ -169,13 +172,19 @@ void getHFlags(char * flags) {
   strcpy(hFlags, flags);
 }
 
-
-
-void signalUSR1(int sig) {
-  direc++;
-  printf("New directory: %d/%d directories/files at this time.\n",direc, files);
+void getInitialPid(int pid) {
+  initialPid =pid;
 }
-void signalUSR2() {
-  files++;
-  printf("New directory: %d/%d directories/files at this time.\n",direc, files);
+
+
+void signalHandler(int sigNum) {
+  if (sigNum == SIGUSR1) {
+    direc++;
+    if(getpid() == initialPid) {
+      printf("New directory: %d/%d directories/files at this time.\n",direc, files);
+    }
+  }
+  else if (sigNum == SIGUSR2) {
+    files++;
+  }
 }

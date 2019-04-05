@@ -12,7 +12,8 @@
 void getFileToWrite(char * file);
 void getHFlags(char * flags);
 void RecursiveHandler(char * path, bool oFlag, bool hFlag, bool vFlag);
-//void getInicialpid();
-//void signalUSR1();
-void signalUSR1(int sig);
+void getInitialPid();
+/*void signalUSR1(int sig);
 void signalUSR2();
+*/
+void signalHandler(int sigNum);
