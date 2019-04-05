@@ -8,7 +8,6 @@ static int inicialpid;
 
 void RecursiveHandler(char * path, bool oFlag, bool hFlag, bool vFlag) {
 
-  //getInicialpid();
 
   struct dirent *dt;
   DIR *dir = opendir(path);
@@ -22,12 +21,7 @@ void RecursiveHandler(char * path, bool oFlag, bool hFlag, bool vFlag) {
 
 
   dt = readdir(dir);
-  /*if (oFlag) {
-    direc++;
-    //EMITE SINAL USR1
-    //Handler dá print da mensagem com nº de direc e files
 
-  }*/
 
   while (dt!= NULL) {
 
@@ -49,10 +43,7 @@ void RecursiveHandler(char * path, bool oFlag, bool hFlag, bool vFlag) {
             RecursiveHandler(str, oFlag, hFlag, vFlag);
             exit(0);
           }
-          /*if(inicialpid == pid)
-          {
-            signalUSR1();
-          }*/
+
 
 
         }
@@ -179,10 +170,6 @@ void getHFlags(char * flags) {
 }
 
 
-/*void getInicialpid()
-{
-  inicialpid = getpid();
-}*/
 
 void signalUSR1(int sig) {
   direc++;
