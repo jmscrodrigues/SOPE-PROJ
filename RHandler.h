@@ -5,9 +5,14 @@
 #include <stdbool.h>
 #include <string.h>
 #include <stdlib.h>
+#include <signal.h>
 #include "BasicHandler.h"
 #include "VHandler.h"
 
 void getFileToWrite(char * file);
 void getHFlags(char * flags);
 void RecursiveHandler(char * path, bool oFlag, bool hFlag, bool vFlag);
+//void getInicialpid();
+//void signalUSR1();
+void signalUSR1(int sig);
+void signalUSR2();
